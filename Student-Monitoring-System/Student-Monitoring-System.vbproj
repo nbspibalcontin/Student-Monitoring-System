@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Student_Monitoring_System</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
+    <StartupObject>Student_Monitoring_System.LoadingScreen</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
   </PropertyGroup>

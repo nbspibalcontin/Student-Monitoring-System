@@ -23,7 +23,7 @@ Partial Class MainPage
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(MainPage))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainPage))
         Panel1 = New Panel()
         PanelDropdown = New Panel()
         ButtonAttendance = New Button()
@@ -399,7 +399,7 @@ Partial Class MainPage
         ' PictureBoxSelect
         ' 
         PictureBoxSelect.Image = My.Resources.Resources._1564490_arrow_music_play_arrows_audio_icon
-        PictureBoxSelect.Location = New Point(12, 120)
+        PictureBoxSelect.Location = New Point(12, 103)
         PictureBoxSelect.Name = "PictureBoxSelect"
         PictureBoxSelect.Size = New Size(32, 44)
         PictureBoxSelect.SizeMode = PictureBoxSizeMode.StretchImage
@@ -755,6 +755,7 @@ Partial Class MainPage
         DataGridView1.Name = "DataGridView1"
         DataGridView1.ReadOnly = True
         DataGridView1.RowTemplate.Height = 25
+        DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         DataGridView1.Size = New Size(1095, 512)
         DataGridView1.TabIndex = 0
         ' 
@@ -1877,11 +1878,11 @@ Partial Class MainPage
         ' 
         ' ButtonArchive1
         ' 
-        ButtonArchive1.Anchor = AnchorStyles.Right
+        ButtonArchive1.Anchor = AnchorStyles.Top
         ButtonArchive1.Font = New Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonArchive1.Image = My.Resources.Resources.icons8_export_32
         ButtonArchive1.ImageAlign = ContentAlignment.MiddleLeft
-        ButtonArchive1.Location = New Point(829, 249)
+        ButtonArchive1.Location = New Point(829, 238)
         ButtonArchive1.Name = "ButtonArchive1"
         ButtonArchive1.Size = New Size(128, 46)
         ButtonArchive1.TabIndex = 49
@@ -1931,11 +1932,11 @@ Partial Class MainPage
         ' 
         ' ButtonPrint1
         ' 
-        ButtonPrint1.Anchor = AnchorStyles.Right
+        ButtonPrint1.Anchor = AnchorStyles.Top
         ButtonPrint1.Font = New Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonPrint1.Image = My.Resources.Resources.print
         ButtonPrint1.ImageAlign = ContentAlignment.MiddleLeft
-        ButtonPrint1.Location = New Point(972, 249)
+        ButtonPrint1.Location = New Point(972, 239)
         ButtonPrint1.Name = "ButtonPrint1"
         ButtonPrint1.Size = New Size(128, 46)
         ButtonPrint1.TabIndex = 3
@@ -1961,13 +1962,13 @@ Partial Class MainPage
         ' 
         ContextMenuStrip2.Items.AddRange(New ToolStripItem() {RefreshToolStripMenuItem1})
         ContextMenuStrip2.Name = "ContextMenuStrip2"
-        ContextMenuStrip2.Size = New Size(181, 48)
+        ContextMenuStrip2.Size = New Size(114, 26)
         ' 
         ' RefreshToolStripMenuItem1
         ' 
         RefreshToolStripMenuItem1.Image = My.Resources.Resources.icons8_update_30
         RefreshToolStripMenuItem1.Name = "RefreshToolStripMenuItem1"
-        RefreshToolStripMenuItem1.Size = New Size(180, 22)
+        RefreshToolStripMenuItem1.Size = New Size(113, 22)
         RefreshToolStripMenuItem1.Text = "Refresh"
         ' 
         ' Panel6
@@ -2209,11 +2210,11 @@ Partial Class MainPage
         ' 
         ' ButtonArchive2
         ' 
-        ButtonArchive2.Anchor = AnchorStyles.Right
+        ButtonArchive2.Anchor = AnchorStyles.Top
         ButtonArchive2.Font = New Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonArchive2.Image = My.Resources.Resources.icons8_export_32
         ButtonArchive2.ImageAlign = ContentAlignment.MiddleLeft
-        ButtonArchive2.Location = New Point(829, 249)
+        ButtonArchive2.Location = New Point(829, 241)
         ButtonArchive2.Name = "ButtonArchive2"
         ButtonArchive2.Size = New Size(128, 46)
         ButtonArchive2.TabIndex = 49
@@ -2313,11 +2314,11 @@ Partial Class MainPage
         ' 
         ' ButtonPrint2
         ' 
-        ButtonPrint2.Anchor = AnchorStyles.Right
+        ButtonPrint2.Anchor = AnchorStyles.Top
         ButtonPrint2.Font = New Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonPrint2.Image = My.Resources.Resources.print
         ButtonPrint2.ImageAlign = ContentAlignment.MiddleLeft
-        ButtonPrint2.Location = New Point(972, 249)
+        ButtonPrint2.Location = New Point(972, 242)
         ButtonPrint2.Name = "ButtonPrint2"
         ButtonPrint2.Size = New Size(128, 46)
         ButtonPrint2.TabIndex = 4
@@ -2521,7 +2522,7 @@ Partial Class MainPage
         ' 
         ' ButtonPrint3
         ' 
-        ButtonPrint3.Anchor = AnchorStyles.Right
+        ButtonPrint3.Anchor = AnchorStyles.Top
         ButtonPrint3.Font = New Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonPrint3.Image = My.Resources.Resources.print
         ButtonPrint3.ImageAlign = ContentAlignment.MiddleLeft
@@ -2653,7 +2654,7 @@ Partial Class MainPage
         ' 
         ' ButtonArchive3
         ' 
-        ButtonArchive3.Anchor = AnchorStyles.Right
+        ButtonArchive3.Anchor = AnchorStyles.Top
         ButtonArchive3.Font = New Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonArchive3.Image = My.Resources.Resources.icons8_export_32
         ButtonArchive3.ImageAlign = ContentAlignment.MiddleLeft
@@ -2875,7 +2876,6 @@ Partial Class MainPage
         Controls.Add(LabelConnectionStatus)
         Controls.Add(Panel2)
         Controls.Add(Panel1)
-        Controls.Add(PanelStudentReport)
         Controls.Add(PanelRetrieve)
         Controls.Add(PanelRegistration)
         Controls.Add(PanelUserDetails)
@@ -2884,6 +2884,7 @@ Partial Class MainPage
         Controls.Add(PanelDashboard)
         Controls.Add(PanelAttendanceReport)
         Controls.Add(PanelMessageReport)
+        Controls.Add(PanelStudentReport)
         Name = "MainPage"
         Text = "Student Monitoring System"
         WindowState = FormWindowState.Maximized

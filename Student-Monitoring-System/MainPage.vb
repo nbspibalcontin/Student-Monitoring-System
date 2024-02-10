@@ -191,7 +191,7 @@ Public Class MainPage
 
             Dim query As String = "SELECT a.RFID_UID, a.Student_ID, a.Student_Name, a.Department, a.Course, a.Year, a.Status AS Attendance_Status, a.Time, a.Date, s.Status AS Sms_Status
                                     FROM attendance a
-                                    INNER JOIN sms_messages s ON a.Time = s.Time
+                                    INNER JOIN sms_messages s ON a.ID = s.Attendance_ID
                                     WHERE a.Date = '" & philippinesDate & "'
                                     ORDER BY a.Time DESC;
                                     "
@@ -366,7 +366,7 @@ Public Class MainPage
         Try
             Dim query As String = "SELECT a.RFID_UID, a.Student_ID, a.Student_Name, a.Department, a.Course, a.Year, a.Status AS Attendance_Status, a.Time, a.Date, s.Status AS Sms_Status
                         FROM attendance a
-                        INNER JOIN sms_messages s ON a.Time = s.Time
+                        INNER JOIN sms_messages s ON a.ID = s.Attendance_ID
                         WHERE 1 = 1"
 
             If dateFilter2 = "Today" Then
@@ -784,9 +784,10 @@ Public Class MainPage
                         TextBoxMiddlename.Text = DT.Rows(0).Item("Middlename")
                         TextBoxLastname.Text = DT.Rows(0).Item("Lastname")
                         TextBoxAge.Text = DT.Rows(0).Item("Age")
-                        ComboBoxDepartment.Text = DT.Rows(0).Item("Department")
-                        ComboBoxCourse.Text = DT.Rows(0).Item("Course")
-                        ComboBoxYear.Text = DT.Rows(0).Item("Year")
+                        ComboBoxDepartment.SelectedIndex = ComboBoxDepartment.FindStringExact(DT.Rows(0).Item("Department").ToString())
+                        ComboBoxCourse.SelectedIndex = ComboBoxCourse.FindStringExact(DT.Rows(0).Item("Course").ToString())
+                        ComboBoxYear.SelectedIndex = ComboBoxYear.FindStringExact(DT.Rows(0).Item("Year").ToString())
+
                         TextBoxParent_Number.Text = DT.Rows(0).Item("Parent_Number")
                         TextBoxStudentID.Text = DT.Rows(0).Item("ID")
                         StatusInput = "Update"
@@ -1001,7 +1002,7 @@ Public Class MainPage
         ComboBoxCourse.Text = ""
         ComboBoxYear.Text = ""
         TextBoxParent_Number.Text = "+63"
-        PictureBoxImageInput.Image = My.Resources._6602497_design_graphic_picture_upload_icon
+        PictureBoxImageInput.Image = My.Resources.icons8_upload_image_96
     End Sub
 
     'Scanning the RFID Card
@@ -1401,7 +1402,7 @@ Public Class MainPage
                 ComboBoxYear.Items.Add("2nd Year")
                 ComboBoxYear.Items.Add("3rd Year")
                 ComboBoxYear.Items.Add("4th Year")
-            Case "SeniorHigh"
+            Case "Senior High"
                 ComboBoxCourse.Items.Clear()
                 ComboBoxYear.Items.Clear()
                 ComboBoxCourse.Items.Add("ABM")
@@ -1423,7 +1424,7 @@ Public Class MainPage
         ComboBoxCourse.Text = ""
         ComboBoxYear.Text = ""
         TextBoxParent_Number.Text = "+63"
-        PictureBoxImageInput.Image = My.Resources._6602497_design_graphic_picture_upload_icon
+        PictureBoxImageInput.Image = My.Resources.icons8_upload_image_96
     End Sub
 
     Private Sub CheckBoxByName_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxByName.CheckedChanged
@@ -1663,8 +1664,6 @@ Public Class MainPage
                             ' Display the data in the DataGridView
                             DataGridView7.DataSource = dataTable
 
-                            ' Sort the DataGridView by the "Date" column in descending order
-                            DataGridView7.Sort(DataGridView7.Columns("Date"), System.ComponentModel.ListSortDirection.Descending)
 
                             CheckStatusColumn(dataTable)
 
@@ -1807,6 +1806,8 @@ Public Class MainPage
         TextBoxinRetrievePanel.Text = ""
         CheckBoxNameinRetrieve.Checked = True
         ComboBoxDepartmentinRetrieve.SelectedIndex = 0
+        DateTimePickerStartinRetrieve.Value = DateTime.Today
+        DateTimePickerEndinRetrieve.Value = DateTime.Today
     End Sub
 
     Private Sub DateTimePickerEndinRetrieve_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePickerEndinRetrieve.ValueChanged
@@ -2424,7 +2425,7 @@ Public Class MainPage
         Try
             Dim query As String = "SELECT a.RFID_UID, a.Student_ID, a.Student_Name, a.Department, a.Course, a.Year, a.Status AS Attendance_Status, a.Time, a.Date, s.Status AS Sms_Status
                         FROM attendance a
-                        INNER JOIN sms_messages s ON a.Time = s.Time
+                        INNER JOIN sms_messages s ON a.ID = s.Attendance_ID
                         WHERE 1 = 1"
 
             If dateFilter = "Today" Then
@@ -2844,6 +2845,11 @@ Public Class MainPage
         PanelRetrieve.Visible = False
         PanelMessageReport.Visible = False
         PanelAttendanceReport.Visible = False
+
+        ComboBoxYearLevel.SelectedIndex = 0
+        Dim yearLevel As String = ComboBoxYearLevel.SelectedItem.ToString()
+        Dim newData4 As DataTable = ShowDataByYearLevel(yearLevel, False, False, "")
+        DataGridView4.DataSource = newData4
     End Sub
 
     'Show Message Report Panel
@@ -2857,6 +2863,12 @@ Public Class MainPage
         PanelRetrieve.Visible = False
         PanelMessageReport.Visible = True
         PanelAttendanceReport.Visible = False
+
+        ComboBoxInMessageReport.SelectedIndex = 0
+        Dim successOrFail = ComboBoxInMessageReport.SelectedItem.ToString
+        Dim dateFilter = ComboBoxDate.SelectedItem.ToString
+        Dim newData = ShowDataInMessageReport(successOrFail, "", dateFilter)
+        DataGridView5.DataSource = newData
     End Sub
 
     'Show Message Report Panel
@@ -2870,6 +2882,17 @@ Public Class MainPage
         PanelRetrieve.Visible = False
         PanelMessageReport.Visible = False
         PanelAttendanceReport.Visible = True
+
+        Dim dateFilter As String = ComboBoxDate.SelectedItem.ToString()
+        Dim dateFilter6 As String = ComboBoxDateinAttendance.SelectedItem.ToString()
+        Dim departmentFilter As String = ComboBoxYearlevelinAttendanceReport.SelectedItem.ToString()
+        Dim statusFilter As String = ComboBoxStatusinAttendanceReport.SelectedItem.ToString()
+        Dim searchKeyword As String = TextBoxSearchinAttendanceReport.Text
+        Dim startDate As Date = DateTimePickerInAttendanceReportStart.Value.Date
+        Dim endDate As Date = DateTimePickerInAttendanceReportEnd.Value.Date
+
+        Dim newData6 As DataTable = ShowDataInAttendanceReport(dateFilter, departmentFilter, statusFilter, searchKeyword, startDate, endDate)
+        DataGridView6.DataSource = newData6
     End Sub
 
     'Show the data and time
@@ -3021,4 +3044,6 @@ Public Class MainPage
             e.Cancel = True
         End If
     End Sub
+
+
 End Class
